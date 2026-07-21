@@ -12,6 +12,7 @@ phases:
   build:
     commands:
       - echo "Build started on $(date)"
+      - cd users-microservice
       - mvn clean package
       - echo "Building Docker image..."
       - docker build -f dockerfile -t $REPOSITORY_URI:latest .
@@ -23,15 +24,7 @@ phases:
       - echo "Pushing Docker images..."
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-
-      # Debugging
-      - pwd
-      - ls -la
-
-      - echo "Creating imagedefinitions.json..."
       - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json
-
-      # Verify file
       - ls -la
       - cat imagedefinitions.json
 
