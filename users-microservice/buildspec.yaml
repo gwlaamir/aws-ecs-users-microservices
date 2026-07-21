@@ -12,7 +12,6 @@ phases:
   build:
     commands:
       - echo "Build started on $(date)"
-      - cd users-microservice
       - mvn clean package
       - echo "Building Docker image..."
       - docker build -f dockerfile -t $REPOSITORY_URI:latest .
